@@ -1,0 +1,22 @@
+PATH
+  remote: .
+  specs:
+    z_ruby_sdk (1.0)
+      awesome_print (>= 1.1.0)
+      hashie (>= 1.2.0)
+      httpclient (>= 2.3.1)
+      json_pure (>= 1.7.6)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    awesome_print (1.6.1)
+    hashie (3.4.2)
+    httpclient (2.6.0.1)
+    json_pure (1.8.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  z_ruby_sdk!
