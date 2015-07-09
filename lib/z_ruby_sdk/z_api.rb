@@ -20,8 +20,10 @@ class Z_API
   end
 
   # Do HTTP GET
-  def exec_get_api(uri, query_string)    
+  def exec_get_api(endpoint, uri, query_string)
     headers = {}
+    headers['apiAccessKeyId'] = tenant_user_id_to_use
+    headers['apiSecretAccessKey'] = tenant_password_to_use
 
     # indicate accept response body in JSON
     headers['Accept'] = 'application/json'
@@ -34,8 +36,7 @@ class Z_API
       url = uri
     else
       # turn the resource uri to a full URL
-      url = Z_Config.instance.get_val("rest_api_endpoint") +
-        '/' + Z_Config.instance.get_val("rest_api_version") + uri
+      url = endpoint + uri
     end
 
     # Trace pre-call arguments if api_trace is on
@@ -58,8 +59,10 @@ class Z_API
   end
 
   # Do HTTP PUT
-  def exec_put_api(uri, request_body)
+  def exec_put_api(endpoint, uri, request_body)
     headers = {}
+    headers['apiAccessKeyId'] = tenant_user_id_to_use
+    headers['apiSecretAccessKey'] = tenant_password_to_use
 
     # indicate accept response body in JSON
     headers['Accept'] = 'application/json'
@@ -68,8 +71,7 @@ class Z_API
     headers['Content-Type'] = 'application/json'
 
     # turn the resource uri to a full URL
-    url = Z_Config.instance.get_val("rest_api_endpoint") +
-      '/' + Z_Config.instance.get_val("rest_api_version") + uri
+    url = endpoint + uri
 
     # Trace pre-call arguments if api_trace is on
     if Z_Config.instance.get_val("api_trace")
@@ -91,8 +93,10 @@ class Z_API
   end
 
   # Do HTTP POST
-  def exec_post_api(uri, request_body)
+  def exec_post_api(endpoint, uri, request_body)
     headers = {}
+    headers['apiAccessKeyId'] = tenant_user_id_to_use
+    headers['apiSecretAccessKey'] = tenant_password_to_use
 
     # indicate accept response body in JSON
     headers['Accept'] = 'application/json'
@@ -102,18 +106,9 @@ class Z_API
      # For a POST call, request body content is in JSON
       headers['Content-Type'] = 'application/json'
     end
-    
-    # For a connect call the version number is not in the url
-    if uri.downcase.include?(Z_Constants::CONNECTION_URI)
-      # put tenant's credentials in request header
-      url = Z_Config.instance.get_val("rest_api_endpoint") + uri
-      headers['apiAccessKeyId'] = tenant_user_id_to_use
-      headers['apiSecretAccessKey'] = tenant_password_to_use
-    else
-      # turn the resource uri to a full URL
-      url = Z_Config.instance.get_val("rest_api_endpoint") +
-        '/' + Z_Config.instance.get_val("rest_api_version") + uri
-    end
+
+    # turn the resource uri to a full URL
+    url = endpoint + uri
 
     # Trace pre-call arguments if api_trace is on
     if Z_Config.instance.get_val("api_trace")
@@ -145,15 +140,16 @@ class Z_API
   end
 
   # Do HTTP DELETE
-  def exec_delete_api(uri, query_string)
+  def exec_delete_api(endpoint, uri, query_string)
     headers = {}
+    headers['apiAccessKeyId'] = tenant_user_id_to_use
+    headers['apiSecretAccessKey'] = tenant_password_to_use
 
     # indicate accept response body in JSON
     headers['Accept'] = 'application/json'
 
     # turn the resource uri to a full URL
-    url = Z_Config.instance.get_val("rest_api_endpoint") +
-      '/' + Z_Config.instance.get_val("rest_api_version") + uri
+    url = endpoint + uri
 
     # Trace pre-call arguments if api_trace is on
     if Z_Config.instance.get_val("api_trace")
